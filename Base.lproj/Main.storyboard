@@ -63,7 +63,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Meal" id="pXn-at-xGW">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ndt-bJ-AJ6"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ndt-bJ-AJ6">
+                            <connections>
+                                <action selector="cancel:" destination="BYZ-38-t0r" id="gox-il-U1B"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="IhO-md-3me">
                             <connections>
                                 <segue destination="b4n-qn-XyU" kind="unwind" unwindAction="unwindToMealList:" id="Jdx-1X-0kD"/>
@@ -138,6 +142,7 @@
                                     <outlet property="nameLabel" destination="FV4-Ja-ILQ" id="1nu-Df-lOV"/>
                                     <outlet property="photoImageView" destination="V1F-bE-3xF" id="PUr-wD-sFq"/>
                                     <outlet property="ratingControl" destination="KTn-45-0nr" id="iZL-LA-7kV"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="showDetail" id="x2k-tR-QQa"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -194,10 +199,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bnf-R6-ZuI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="906.5" y="51.5"/>
+            <point key="canvasLocation" x="927.5" y="468.5"/>
         </scene>
     </scenes>
     <resources>
         <image name="default photo" width="540" height="540"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="x2k-tR-QQa"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -18,19 +18,32 @@ class MealViewController: UIViewController, UITextFieldDelegate,UIImagePickerCon
   @IBOutlet weak var ratingControl: RatingControl!
   @IBOutlet weak var saveButton: UIBarButtonItem!
   
+  var meal: Meal?
   
-  
-  /* 
- 
-  This value is either passed my 'MealTableController' in
-   'prerareForSegue(_:sender:)' or constructed as part of 
+  /*
+   
+   This value is either passed my 'MealTableController' in
+   'prerareForSegue(_:sender:)' or constructed as part of
    adding a new meal.
- */
+   */
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    // Handle the text field's user input through delegate callback.
     nameTextField.delegate = self
+    
+    // Set up views if editing an exisiting meal.
+    if let meal = meal {
+      navigationItem.title = meal.name
+      nameTextField.text = meal.name
+      photoImageView.image = meal.photo
+      ratingControl.rating = meal.rating
+      
+    }
+    
+    // Enable the Save button only if the text field has a valid Meal name.
+    checkValidMealName()
+    
   }
   
   override func didReceiveMemoryWarning() {
@@ -47,13 +60,24 @@ class MealViewController: UIViewController, UITextFieldDelegate,UIImagePickerCon
     textField.resignFirstResponder()
     
     return true
+    
   }
   
   func textFieldDidEndEditing(textField: UITextField) {
-    
+    checkValidMealName()
+    navigationItem.title = textField.text
     
   }
   
+  func textFieldBeginEditing(textField: UITextField) {
+    // Disable the Save button while editing.
+    saveButton.enabled = false
+  }
+  func checkValidMealName(){
+    // Disable the save button if the text field is empty.
+    let text = nameTextField.text ?? ""
+    saveButton.enabled = !text.isEmpty
+  }
   
   // MARK: UIImagePickerControllDelegate
   func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -75,7 +99,12 @@ class MealViewController: UIViewController, UITextFieldDelegate,UIImagePickerCon
   }
   
   // MARK: Navigation
-  // This method lets you configure a view controller before it's presented. 
+  // This method lets you configure a view controller before it's presented.
+  
+  @IBAction func cancel(sender: UIBarButtonItem) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+  
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if saveButton === sender {
